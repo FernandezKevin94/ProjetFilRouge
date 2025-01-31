@@ -1,0 +1,37 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Affecter une tâche{% endblock %}
+
+{% block body %}
+<div class="container mt-4">
+    <div class="row">
+        <!-- Sidebar pour le filtre -->
+        <div class="col-md-3">
+            <div class="card shadow-sm p-3">
+                <h3 class="mb-3">Filtrer</h3>
+                {{ form(f) }}
+            </div>
+        </div>
+
+        <!-- Liste des membres -->
+        <div class="col-md-9">
+            <h4 class="mb-4">Membres</h4>
+            <div class="row row-cols-1 row-cols-md-3 g-3">
+                {% for user in users %}
+                    <div class="col">
+                        <div class="card text-center shadow-sm border-0">
+                            <div class="card-body">
+                                <h5 class="card-title text-primary">{{ user.matricule }}</h5>
+                                <h6 class="card-subtitle mb-3 text-muted">{{ user.firstName }}</h6>
+                                <a href="{{ path('app_add_team', {'id': user.id}) }}" class="btn btn-outline-info">
+                                    Choisir
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

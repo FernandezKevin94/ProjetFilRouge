@@ -1,0 +1,24 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello HomeController!{% endblock %}
+
+{% block body %}
+<style>
+    .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
+    .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
+</style>
+{# <h1>Hello {{ vrai }}! 💖</h1>
+<h2> numéro 1 </h2>#}
+<img src="{{asset('assets/img/Kim.jpg') }}" alt="Kim"/> 
+<a class="btn btn-info" href="{{ path('app_home') }}"role="button">cliquer ici</a>
+<img class="rounded-5" style="max-width: 600px;"src="{{asset('assets/img/PerfectNight.jpg') }}" alt="night"/>
+{# <div class="example-wrapper">
+    <h1>Hello {{ controller_name }}! ✅</h1>
+
+    This friendly message is coming from:
+    <ul>
+        <li>Your controller at <code>C:/Users/INSY2S/Documents/managinProjects/src/Controller/HomeController.php</code></li>
+        <li>Your template at <code>C:/Users/INSY2S/Documents/managinProjects/templates/home/home.html.twig</code></li>
+    </ul>
+</div> #}
+{% endblock %}

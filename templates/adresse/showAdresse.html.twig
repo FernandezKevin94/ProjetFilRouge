@@ -1,0 +1,67 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Adresse{% endblock %}
+
+{% block body %}
+<div class="mt-3">
+<a href="{{ path('app_adresse_index') }}" class="btn btn-outline-secondary">
+    <svg xmlns="http://www.w3.org/2000/svg" height="32" width="32" viewBox="0 0 512 512">
+    <path d="M177.5 414c-8.8 3.8-19 2-26-4.6l-144-136C2.7 268.9 0 262.6 0 256s2.7-12.9 7.5-17.4l144-136c7-6.6 17.2-8.4 26-4.6s14.5 12.5 14.5 22l0 72 288 0c17.7 0 32 14.3 32 32l0 64c0 17.7-14.3 32-32 32l-288 0 0 72c0 9.6-5.7 18.2-14.5 22z"/></svg>
+    <span class="ms-2">Retour</span>
+    </a>
+    </div>
+
+    <div class="text-end">
+     <a href="{{ path('app_adresse_edit', {'id': adresse.id}) }}" class="btn btn-outline-secondary">
+    <svg xmlns="http://www.w3.org/2000/svg" height="32" width="32" viewBox="0 0 512 512">
+    <path d="M362.7 19.3L314.3 67.7 444.3 197.7l48.4-48.4c25-25 25-65.5 0-90.5L453.3 19.3c-25-25-65.5-25-90.5 0zm-71 71L58.6 323.5c-10.4 10.4-18 23.3-22.2 37.4L1 481.2C-1.5 489.7 .8 498.8 7 505s15.3 8.5 23.7 6.1l120.3-35.4c14.1-4.2 27-11.8 37.4-22.2L421.7 220.3 291.7 90.3z"/></svg>
+    <span class="ms-2">Editer</span>
+    </a>
+    </div>
+
+    <div class="container mt-2">
+    <h1 class="text-center mb-4">Adresse</h1>
+
+    <table class="table table-dark">
+        <tbody>
+            {# <tr>
+                <th>Id</th>
+                <td>{{ adresse.id }}</td>
+            </tr> #}
+            <tr>
+                <th>Titre</th>
+                <td>{{ adresse.titre }}</td>
+            </tr>
+            <tr>
+                <th>Firstname</th>
+                <td>{{ adresse.firstname }}</td>
+            </tr>
+            <tr>
+                <th>Lastname</th>
+                <td>{{ adresse.lastname }}</td>
+            </tr>
+            <tr>
+                <th>Adresse</th>
+                <td>{{ adresse.adresse }}</td>
+            </tr>
+            <tr>
+                <th>Ville</th>
+                <td>{{ adresse.ville }}</td>
+            </tr>
+            <tr>
+                <th>Codepostal</th>
+                <td>{{ adresse.codepostal }}</td>
+            </tr>
+            <tr>
+                <th>Pays</th>
+                <td>{{ adresse.pays }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <div class="d-flex justify-content-start">
+    {{ include('adresse/deleteAdresse.html.twig') }}
+    </div>
+
+    </div>
+{% endblock %}

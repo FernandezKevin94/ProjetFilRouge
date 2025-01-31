@@ -1,0 +1,66 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Dashboard - Gestionnaire de Projet{% endblock %}
+
+{% block caroussel %}
+
+{% endblock %}
+
+{% block body %}
+
+<h1 class="text-center mt-5">Bonjour User <h1>
+<div class="container mt-5">
+    <div class="row d-flex justify-content-center gap-5 text-center">
+        <div class="col-md-4">
+            <a style="text-decoration: none;" href="{{ path('app_projet_index') }}">
+                <div class="card shadow-lg p-5 mt-5 bg-white rounded">
+                    <h3>📌 Projets</h3>
+                </div>
+            </a>
+        </div>
+        {# <div class="col-md-4">
+        <a style="text-decoration: none;" href="{{ path('app_tache_index') }}">
+            <div class="card shadow-lg p-5 mt-5 bg-white rounded">
+                <h3>✅ Tâches</h3>
+                {# <p>12 tâches à compléter</p> #}
+            {# </div>
+            </a>
+        </div>  #}
+         <div class="col-md-4">
+            <a style="text-decoration: none;" href="{{ path('app_user_index') }}">
+                <div class="card shadow-lg p-5 mt-5 bg-white rounded">
+                    <h3>👥 Utilisateur</h3>
+                </div>
+            </a>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+
+
+{# {% extends 'base.html.twig' %}
+
+{% block title %}Hello HomeController!{% endblock %}
+
+{% block caroussel %}
+{% endblock %}
+
+{% block body %}
+{# <h1>Hello {{ nom }}! 💖</h1>
+<h2> numéro 1 </h2>
+<h3> {{hum}}!</h3>#}
+{# <img src="{{asset('assets/img/KimChaeWon.jpg') }}" alt="Kim"/>  #}
+{# <a class="btn btn-info" href="{{ path('app_home2') }}" role"button">cliquer ici</a> #}
+{# <img class="rounded-5" style="max-width: 600px;"src="{{asset('assets/img/Smart.jpg') }}" alt="smart"/> #}
+{# <div class="example-wrapper">
+    <h1>Hello {{ controller_name }}! ✅</h1>
+
+    This friendly message is coming from:
+    <ul>
+        <li>Your controller at <code>C:/Users/INSY2S/Documents/managinProjects/src/Controller/HomeController.php</code></li>
+        <li>Your template at <code>C:/Users/INSY2S/Documents/managinProjects/templates/home/home.html.twig</code></li>
+    </ul>
+</div> #}
+{# {% endblock %} #}
+
