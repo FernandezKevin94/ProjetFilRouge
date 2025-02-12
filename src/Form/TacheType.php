@@ -41,10 +41,10 @@ class TacheType extends AbstractType
                 ],
                 'label' => 'statut'
             ])
-            ->add('projet', EntityType::class, [
-                'class' => Projet::class,
-                'choice_label' => 'id',
-            ])
+            // ->add('projet', EntityType::class, [
+            //     'class' => Projet::class,
+            //     'choice_label' => 'id',
+            // ])
         ;
     }
 

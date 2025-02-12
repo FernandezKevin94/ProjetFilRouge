@@ -6,6 +6,7 @@ use App\Entity\User;
 use App\Form\UserType;
 use App\Repository\UserRepository;
 use Doctrine\ORM\EntityManagerInterface;
+use Symfony\Bundle\SecurityBundle\Security;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -16,10 +17,18 @@ use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 final class UserController extends AbstractController
 {
     #[Route(name: 'app_user_index', methods: ['GET'])]
-    public function index(UserRepository $userRepository): Response
+    public function index(UserRepository $userRepository, Security $security): Response
     {
+
+        $user = $security->getUser();
+
+        if (!$user)
+         {
+            throw $this->createNotFoundException("Aucun utilisateur connecté.");
+         }
+
         return $this->render('user/indexUser.html.twig', [
-            'users' => $userRepository->findAll(),
+            'users' => [$user],
         ]);
     }
 

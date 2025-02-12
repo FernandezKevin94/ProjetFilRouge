@@ -4,6 +4,7 @@ namespace App\Repository;
 
 use App\Classes\recherche;
 use App\Entity\User;
+use App\Entity\Projet;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Component\Security\Core\Exception\UnsupportedUserException;
@@ -48,6 +49,106 @@ class UserRepository extends ServiceEntityRepository implements PasswordUpgrader
                 ->getResult()
             ;
         }
+
+        /**
+        * @return User[] Returns an array of User objects
+        */
+        public function findByProjet(Projet $projet): array
+{
+    return $this->createQueryBuilder('u')
+        ->innerJoin('u.projets', 'p') 
+        ->andWhere('p = :projet') 
+        ->setParameter('projet', $projet) 
+        ->getQuery()
+        ->getResult();
+}
+        
+        
+
+        /**
+        * @return User[] Returns an array of User objects
+        */
+        public function findUsersWithoutProjet(): array
+        {
+            return $this->createQueryBuilder('u')
+              ->leftJoin('u.projets', 'p') 
+              ->andWhere('p.id IS NULL') 
+             ->getQuery()
+             ->getResult();
+        }
+
+        //  /**
+        // * @return User[] Returns an array of User objects
+        // */
+        // public function findUsersWithoutTache(): array
+        // {
+
+        //   return $this->createQueryBuilder('u')
+        //     ->leftJoin('u.taches', 't') 
+        //     ->andWhere('t.id IS NULL') 
+        //     ->getQuery()
+        //     ->getResult();
+        // }
+
+        // /**
+        // * @return User[] Returns an array of User objects
+        // */
+
+        // public function findUsersWithoutTacheAndWithProjet(): array
+        // {
+        //     return $this->createQueryBuilder('u')
+        //         ->leftJoin('u.taches', 't') 
+        //         ->leftJoin('u.projets', 'p')
+        //         ->andWhere('t.id IS NULL') 
+        //         ->andWhere('p.id IS NOT NULL') 
+        //         ->getQuery()
+        //         ->getResult();
+        // }
+
+        /**
+        * @return User[] Returns an array of User objects
+        */
+        public function findUsersWithoutTacheForProjet(Projet $projet): array
+        {
+            return $this->createQueryBuilder('u')
+                ->leftJoin('u.taches', 't') 
+                ->leftJoin('u.projets', 'p') 
+                ->where('p = :projet') 
+                ->andWhere('t.id IS NULL') 
+                ->setParameter('projet', $projet)
+                ->getQuery()
+                ->getResult();
+        }
+
+        /** 
+        *@return User[] Returns an array of User objects
+        */
+         public function findNoAffectedUsers(): array
+        {
+
+             return $this->createQueryBuilder('u')
+             ->andWhere('u.isAffected = false')
+            ->orderBy('u.id', 'ASC')
+            ->getQuery()
+            ->getResult()
+            ;
+
+        }
+
+// //     /** 
+// //    * @return User[] Returns an array of User objects
+// //    */
+// //      public function findProjectMembers(Project $project): array
+// //      {
+
+// //       return $this->createQueryBuilder('a')
+//         ->join('a.projects', 'u')
+//         ->andWhere('u = :val')
+//         ->setParameter('val', $project)
+//         ->getQuery()
+//         ->getResult();
+
+// //      }
 
         /**
         * @return User[] Returns an array of User objects

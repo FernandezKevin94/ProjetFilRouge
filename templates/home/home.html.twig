@@ -8,34 +8,39 @@
 
 {% block body %}
 
-<h1 class="text-center mt-5">Bonjour User <h1>
-<div class="container mt-5">
-    <div class="row d-flex justify-content-center gap-5 text-center">
-        <div class="col-md-4">
-            <a style="text-decoration: none;" href="{{ path('app_projet_index') }}">
-                <div class="card shadow-lg p-5 mt-5 bg-white rounded">
-                    <h3>📌 Projets</h3>
-                </div>
-            </a>
-        </div>
-        {# <div class="col-md-4">
-        <a style="text-decoration: none;" href="{{ path('app_tache_index') }}">
-            <div class="card shadow-lg p-5 mt-5 bg-white rounded">
-                <h3>✅ Tâches</h3>
-                {# <p>12 tâches à compléter</p> #}
-            {# </div>
-            </a>
-        </div>  #}
-         <div class="col-md-4">
-            <a style="text-decoration: none;" href="{{ path('app_user_index') }}">
-                <div class="card shadow-lg p-5 mt-5 bg-white rounded">
-                    <h3>👥 Utilisateur</h3>
-                </div>
-            </a>
-        </div>
+<div class="banner bg-dark text-white text-center py-4">
+    <div class="container">
+        <h1 class="display-4">Bienvenue sur votre espace de gestion de projets</h1>
+        <p class="lead">Gérez vos projets, tâches et utilisateurs</p>
     </div>
 </div>
+
+<h1 class="text-center mt-2 text-dark">Bonjour User</h1>
+<div class="container mt-5">
+    <div class="row d-flex justify-content-center gap-4 text-center">
+    
+        <div class="col-md-4 mb-4">
+            <a href="{{ path('app_mes_projets') }}" style="text-decoration: none;">
+                <div class="card shadow-lg p-4 bg-light rounded-lg hover-shadow">
+                    <h3 class="text-dark">📌 Mes Projets</h3>
+                    <p class="text-muted">Visualiser vos projets</p>
+                </div>
+            </a>
+        </div>
+
+        <div class="col-md-4 mb-4">
+            <a href="{{ path('app_user_index') }}" style="text-decoration: none;">
+                <div class="card shadow-lg p-4 bg-light rounded-lg hover-shadow">
+                    <h3 class="text-dark">👥 Utilisateur</h3>
+                    <p class="text-muted">Gérer vos informations et paramètres</p>
+                </div>
+            </a>
+        </div>
+      </div>
+    </div>
 {% endblock %}
+
+
 
 
 

@@ -5,6 +5,7 @@ namespace App\Classes;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\RequestStack;
 use App\Entity\User;
+use App\Entity\Tache;
 
 class GererSession
 {
@@ -17,10 +18,10 @@ class GererSession
     }
 
     // Ajouter un user à l'équipe
-    public function addTache($id){
+    public function addTache(Tache $t){
         // Créer  un tableau vide si la session vient d'être crée
         $tache = $this->session->get('tache','');
-        $tache=$id;
+        $tache=$t;
 
         $this ->session->set('tache', $tache);
     }

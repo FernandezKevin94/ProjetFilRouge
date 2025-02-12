@@ -40,9 +40,16 @@ class Projet
     #[ORM\ManyToMany(targetEntity: User::class, inversedBy: 'projets')]
     private Collection $user;
 
+    /**
+     * @var Collection<int, Tache>
+     */
+    #[ORM\OneToMany(targetEntity: Tache::class, mappedBy: 'projet')]
+    private Collection $tache;
+
     public function __construct()
     {
         $this->user = new ArrayCollection();
+        $this->tache = new ArrayCollection();
     }
 
     public function __toString()
@@ -147,6 +154,36 @@ class Projet
     public function removeUser(User $user): static
     {
         $this->user->removeElement($user);
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Tache>
+     */
+    public function getTache(): Collection
+    {
+        return $this->tache;
+    }
+
+    public function addTache(Tache $tache): static
+    {
+        if (!$this->tache->contains($tache)) {
+            $this->tache->add($tache);
+            $tache->setProjet($this);
+        }
+
+        return $this;
+    }
+
+    public function removeTache(Tache $tache): static
+    {
+        if ($this->tache->removeElement($tache)) {
+            // set the owning side to null (unless already changed)
+            if ($tache->getProjet() === $this) {
+                $tache->setProjet(null);
+            }
+        }
 
         return $this;
     }

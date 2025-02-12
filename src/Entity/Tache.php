@@ -26,11 +26,11 @@ class Tache
     #[ORM\Column(length: 255)]
     private ?string $status = null;
 
-    #[ORM\ManyToOne]
-    private ?Projet $projet = null;
-
-    #[ORM\ManyToOne]
+    #[ORM\ManyToOne(targetEntity: User::class,inversedBy:'taches', cascade: ['persist', 'remove'])]
     private ?User $user = null;
+
+    #[ORM\ManyToOne(inversedBy: 'tache')]
+    private ?Projet $projet = null;
 
     public function __toString()
     {
@@ -90,18 +90,6 @@ class Tache
         return $this;
     }
 
-    public function getProjet(): ?Projet
-    {
-        return $this->projet;
-    }
-
-    public function setProjet(?Projet $projet): static
-    {
-        $this->projet = $projet;
-
-        return $this;
-    }
-
     public function getUser(): ?User
     {
         return $this->user;
@@ -110,6 +98,18 @@ class Tache
     public function setUser(?User $user): static
     {
         $this->user = $user;
+
+        return $this;
+    }
+
+    public function getProjet(): ?Projet
+    {
+        return $this->projet;
+    }
+
+    public function setProjet(?Projet $projet): static
+    {
+        $this->projet = $projet;
 
         return $this;
     }

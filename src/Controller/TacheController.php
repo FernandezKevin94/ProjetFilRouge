@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Classes\Recherche;
 use App\Classes\GererSession;
 use App\Entity\Tache;
+use App\Entity\Projet;
 use App\Form\TacheType;
 use App\Form\RechercheType;
 use App\Repository\TacheRepository;
@@ -19,30 +20,37 @@ use Symfony\Component\Routing\Attribute\Route;
 final class TacheController extends AbstractController
 {
     #[Route('/{id}',name: 'app_tache_index', methods: ['GET'])]
-    public function index(TacheRepository $tacheRepository): Response
+    public function index(Projet $projet, TacheRepository $tacheRepository): Response
     {
+
+        $taches = $tacheRepository->findByProjet($projet);
+
         return $this->render('tache/indexTache.html.twig', [
-            'taches' => $tacheRepository->findAll(),
+            'taches' => $taches,
+            'id_projet' => $projet->getId(),
         ]);
     }
 
-    #[Route('/new', name: 'app_tache_new', methods: ['GET', 'POST'])]
-    public function new(Request $request, EntityManagerInterface $entityManager): Response
+    #[Route('/new/{id}', name: 'app_tache_new', methods: ['GET', 'POST'])]
+    public function new(Projet $projet, Request $request, EntityManagerInterface $entityManager, TacheRepository $tacheRepository): Response
     {
         $tache = new Tache();
         $form = $this->createForm(TacheType::class, $tache);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            $tache->setProjet($projet);
+            // dd($tache);
             $entityManager->persist($tache);
             $entityManager->flush();
 
-            return $this->redirectToRoute('app_tache_index', [], Response::HTTP_SEE_OTHER);
+            return $this->redirectToRoute('app_tache_index', ['id'=>$projet->getId()], Response::HTTP_SEE_OTHER);
         }
 
         return $this->render('tache/newTache.html.twig', [
             'tache' => $tache,
             'form' => $form,
+            'id_projet' =>$projet->getId(),
         ]);
     }
 
@@ -84,22 +92,46 @@ final class TacheController extends AbstractController
     }
 
     #[Route('/affecter/{id}', name: 'app_tache_affecter', methods: ['GET'])]
-    public function affecter($id, Request $request, UserRepository $userRepository, GererSession $projet): Response
+    public function affecter(Tache $tache, Request $request, UserRepository $userRepository, GererSession $gs): Response
     {
-        $projet->addProjet($id);
-        $users = $userRepository->findAll();
+        $gs->addTache($tache);
+
+        $projet = $tache->getProjet();
+
+        $users = $userRepository->findUsersWithoutTacheForProjet($projet);
+
+        // $id=$gs->getTache();
+        // $gs->addTache($id);
+        // $users = $userRepository->findAll();
         $search = new Recherche();
         $form = $this->createForm(RechercheType::class, $search);
-
         $form->handleRequest($request);
+
         if($form->isSubmitted() && $form->isValid()) {
             $users = $userRepository->findBySearch($search);
         }
 
         return $this->render('projet/affecterTache.html.twig', [
-            'prj_id' => $id,
+            'tache' => $tache->getId(),
             'users' => $users,
             'f' => $form->createView()
         ]);
     }
+
+    #[Route('/mes-taches', name: 'app_mes_taches')]
+    public function mesTaches(TacheRepository $tacheRepository, Security $security): Response
+    {
+        $user = $security->getUser();
+
+        if (!$user) {
+            throw $this->createAccessDeniedException("Vous devez être connecté pour voir vos tâches.");
+        }
+
+        $taches = $tacheRepository->findByUser($user);
+
+        return $this->render('tache/mes_taches.html.twig', [
+            'taches' => $taches,
+        ]);
+    }
+
 }

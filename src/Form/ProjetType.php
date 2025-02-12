@@ -45,27 +45,17 @@ class ProjetType extends AbstractType
                 ],
                 'label' => 'statut'
             ])
-            ->add('ChefDeProjet', EntityType::class, [
-                'class' => User::class,
-                'choice_label' => function(User $user) {
-                    return $user->getFirstName() . ' ' . $user->getLastName(); // Affiche prénom et nom
-                },
-                'label' => 'Chef de Projet',
-                'placeholder' => 'Sélectionnez un chef de projet',
-            ])
-    //         ->add('user', EntityType::class, [
-    //             'class' => User::class, // L'entité liée
-    //             'choice_label' => function(User $user) {
-    //                 return $user->getFirstName() . ' ' . $user->getLastName(); // Affiche le prénom et le nom
-    //             },
-    //             'label' => 'Membres du Projet',
-    //             'multiple' => true, // Permet la sélection multiple
-    //             'expanded' => true, // Affiche des cases à cocher au lieu d'un menu déroulant
-    //             'choice_attr' => function() {
-    //     return ['class' => 'form-check-input custom-checkbox']; // Applique le CSS
-    // },
-    //     'label_attr' => ['class' => 'form-check-label'],
-    //         ])
+            
+
+            // ->add('ChefDeProjet', EntityType::class, [
+            //     'class' => User::class,
+            //     'choice_label' => function(User $user) {
+            //         return $user->getFirstName() . ' ' . $user->getLastName(); // Affiche prénom et nom
+            //     },
+            //     'label' => 'Chef de Projet',
+            //     'placeholder' => 'Sélectionnez un chef de projet',
+            // ])
+
         ;
     }
 

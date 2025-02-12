@@ -3,6 +3,7 @@
 namespace App\Repository;
 
 use App\Entity\Projet;
+use App\Entity\User;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
@@ -16,21 +17,21 @@ class ProjetRepository extends ServiceEntityRepository
         parent::__construct($registry, Projet::class);
     }
 
-    //    /**
-    //     * @return Projet[] Returns an array of Projet objects
-    //     */
-    //    public function findByExampleField($value): array
-    //    {
-    //        return $this->createQueryBuilder('p')
-    //            ->andWhere('p.exampleField = :val')
-    //            ->setParameter('val', $value)
-    //            ->orderBy('p.id', 'ASC')
-    //            ->setMaxResults(10)
-    //            ->getQuery()
-    //            ->getResult()
-    //        ;
-    //    }
+       /**
+        * @return Projet[] Returns an array of Projet objects
+        */
+       public function findByUser(User $user): array
+       {
+        return $this->createQueryBuilder('p')
+        ->innerJoin('p.user', 'u')
+        ->where('u.id = :userId')
+        ->setParameter('userId', $user->getId())
+        ->getQuery()
+        ->getResult();
+           ;
+       }
 
+    
     //    public function findOneBySomeField($value): ?Projet
     //    {
     //        return $this->createQueryBuilder('p')

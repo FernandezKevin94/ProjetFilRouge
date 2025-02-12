@@ -15,10 +15,11 @@
     <div class="container mt-2">
     <h1 class="text-center mb-4">Edit Tache</h1>
 
-    <div class="card shadow-sm p-4">
+    <div class="card shadow-sm p-4 bg-dark">
         <div class="card-body">
+        <div class="text-light">
     {{ include('tache/formTache.html.twig', {'button_label': 'Update'}) }}
-
+    </div>
       <div class="text-end">
     {{ include('tache/deleteTache.html.twig') }}
       </div>

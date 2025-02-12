@@ -14,13 +14,20 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
+use Symfony\Bundle\SecurityBundle\Security;
 
 #[Route('/projet')]
 final class ProjetController extends AbstractController
 {
     #[Route(name: 'app_projet_index', methods: ['GET'])]
-    public function index(ProjetRepository $projetRepository): Response
+    public function index(ProjetRepository $projetRepository,Security $security): Response
     {
+        $user = $security->getUser();
+    
+        if (!$user) {
+            throw $this->createAccessDeniedException("Vous devez être connecté pour voir vos projets.");
+        }
+
         return $this->render('projet/indexProjet.html.twig', [
             'projets' => $projetRepository->findAll(),
             
@@ -54,16 +61,19 @@ final class ProjetController extends AbstractController
     }
 
     #[Route('/{id}/show', name: 'app_projet_show', methods: ['GET'])]
-    public function show(Projet $projet): Response
+    public function show(Projet $projet, GererSession $gs): Response
     {
+        $gs->addProjet($projet->getId());
         return $this->render('projet/showProjet.html.twig', [
             'projet' => $projet,
+            'membres' => $projet->getUser(),
         ]);
     }
 
     #[Route('/{id}/edit', name: 'app_projet_edit', methods: ['GET', 'POST'])]
-    public function edit(Request $request, Projet $projet, EntityManagerInterface $entityManager): Response
+    public function edit(Projet $projet,Request $request,EntityManagerInterface $entityManager): Response
     {
+        // dd($projet);
         $form = $this->createForm(ProjetType::class, $projet);
         $form->handleRequest($request);
 
@@ -94,12 +104,14 @@ final class ProjetController extends AbstractController
     public function affecter($id, Request $request, UserRepository $userRepository, GererSession $projet): Response
     {
         $projet->addProjet($id);
-        $users = $userRepository->findAll();
+
+        $users = $userRepository->findUsersWithoutProjet();
+        
         $search = new Recherche();
         $form = $this->createForm(RechercheType::class, $search);
-
         $form->handleRequest($request);
-        if($form->isSubmitted() && $form->isValid()) {
+
+        if ($form->isSubmitted() && $form->isValid()) {
             $users = $userRepository->findBySearch($search);
         }
 
@@ -109,4 +121,21 @@ final class ProjetController extends AbstractController
             'f' => $form->createView()
         ]);
     }
+
+    #[Route('/mes-projets', name: 'app_mes_projets')]
+    public function mesProjets(ProjetRepository $projetRepository, Security $security): Response
+    {
+        $user = $security->getUser();
+    
+        if (!$user) {
+            throw $this->createAccessDeniedException("Vous devez être connecté pour voir vos projets.");
+        }
+    
+        $projets = $projetRepository->findByUser($user);
+    
+        return $this->render('projet/mes_projets.html.twig', [
+            'projets' => $projets,
+        ]);
+    }    
+    
 }

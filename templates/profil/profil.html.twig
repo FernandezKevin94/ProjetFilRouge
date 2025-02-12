@@ -7,7 +7,7 @@
     <div class="row justify-content-center">
         <div class="col-md-8">
             <div class="card shadow-sm rounded-lg">
-                <div class="card-header bg-info text-white text-center">
+                <div class="card-header bg-dark text-white text-center">
                     <h1 class="card-title">Mon Profil</h1>
                 </div>
                 <div class="card-body text-center">
@@ -28,4 +28,23 @@
         </div>
     </div>
 </div>
+
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card shadow-sm rounded-lg">
+                <div class="card-header bg-dark text-white text-center">
+                    <h1 class="card-title">Mes Projets</h1>
+                </div>
+                <div class="card-body text-center">
+                    <p class="lead">Accédez à vos projets et vos tâches.</p>
+                    <div class="mt-4">
+                        <a class="btn btn-primary btn-lg me-2" href="{{ path('app_mes_projets') }}" role="button">
+                            <i class="bi bi-person"></i> Mes projets
+                        </a>
+                        {# <a class="btn btn-secondary btn-lg" href="{{ path('app_mes_taches')}}" role="button">
+                            <i class="bi bi-geo-alt"></i> Mes tâches
+                        </a> #}
+                    </div>
+                </div>
 {% endblock %}
