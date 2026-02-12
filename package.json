@@ -1,0 +1,28 @@
+{
+  "name": "projetfilrouge",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "directories": {
+    "test": "tests"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/FernandezKevin94/ProjetFilRouge.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/FernandezKevin94/ProjetFilRouge/issues"
+  },
+  "homepage": "https://github.com/FernandezKevin94/ProjetFilRouge#readme",
+  "dependencies": {
+    "@hotwired/stimulus": "^3.2.2",
+    "@hotwired/turbo": "^8.0.23"
+  }
+}
